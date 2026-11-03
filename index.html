@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>proxywatch · Project proposal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Swiss design system: tokens from the portfolio's themes.ts */
+    :root {
+      --bg: #f4f4f1;
+      --surface: #ffffff;
+      --text: #111111;
+      --muted: #5c5c58;
+      --accent: #e30613;
+      --font: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); font-size: 16px; line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    a:hover { color: var(--accent); }
+    a:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+    .wrap { max-width: 72rem; margin: 0 auto; padding: 0 2.5rem; }
+    @media (max-width: 640px) { .wrap { padding: 0 1.25rem; } }
+
+    .label { font-size: 11px; font-weight: 700; line-height: 1.2; letter-spacing: 0.08em; text-transform: uppercase; }
+    .muted { color: var(--muted); }
+    .display { font-size: clamp(48px, 9vw, 96px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; }
+    .heading { font-size: 24px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+    .accent { color: var(--accent); }
+
+    header { padding: 6rem 0 4rem; }
+    header .display { margin-top: 1rem; }
+    .lede { margin-top: 2rem; max-width: 46rem; }
+    .facts { margin-top: 4rem; border-top: 1px solid var(--text); padding-top: 1.5rem;
+             display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .facts dd { margin-top: 0.5rem; }
+    @media (max-width: 760px) { .facts { grid-template-columns: repeat(2, 1fr); } }
+
+    section { border-top: 1px solid var(--text); }
+    section .wrap { padding-top: 4rem; padding-bottom: 4rem;
+                    display: grid; grid-template-columns: 3fr 9fr; gap: 2rem; }
+    @media (max-width: 760px) { section .wrap { grid-template-columns: 1fr; gap: 1.5rem; } }
+    .num { display: block; font-size: 24px; font-weight: 700; color: var(--muted); margin-bottom: 0.5rem; }
+    .body > * + * { margin-top: 1.25rem; }
+    .body p { max-width: 44rem; }
+
+    ul.dash { list-style: none; display: grid; gap: 0.75rem; max-width: 44rem; }
+    ul.dash li { display: grid; grid-template-columns: 1.25rem 1fr; }
+    ul.dash li::before { content: "—"; }
+
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--text); background: var(--surface); }
+    .steps > div { padding: 1.25rem; border-right: 1px solid var(--text); }
+    .steps > div:last-child { border-right: 0; }
+    .steps p { margin-top: 0.75rem; font-size: 15px; }
+    @media (max-width: 760px) {
+      .steps { grid-template-columns: 1fr; }
+      .steps > div { border-right: 0; border-bottom: 1px solid var(--text); }
+      .steps > div:last-child { border-bottom: 0; }
+    }
+
+    pre { font-family: var(--mono); font-size: 13px; line-height: 1.6; background: var(--text); color: var(--bg);
+          padding: 1.25rem; overflow-x: auto; }
+    pre .c { color: #9a9a94; }
+
+    table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--text); }
+    th, td { text-align: left; vertical-align: top; padding: 0.875rem 1rem; border-bottom: 1px solid var(--text); font-size: 15px; }
+    th { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { white-space: nowrap; font-weight: 700; }
+    .table-scroll { overflow-x: auto; }
+
+    .scope { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .scope h3 { border-top: 1px solid var(--text); padding-top: 1rem; margin-bottom: 1rem; }
+    @media (max-width: 760px) { .scope { grid-template-columns: 1fr; } }
+
+    footer { border-top: 1px solid var(--text); padding: 2rem 0 3rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="label">Project proposal · Design, Build, Ship · Autumn 2026</p>
+    <h1 class="display">proxywatch</h1>
+    <p class="heading lede">
+      proxywatch provides real-time residential proxy detection for anyone doing high-stakes authentication,
+      built on fresher data than any incumbent.
+    </p>
+    <dl class="facts">
+      <div><dt class="label muted">For</dt><dd>Banks, fintechs, anyone with high-stakes logins</dd></div>
+      <div><dt class="label muted">Focus</dt><dd>Systems</dd></div>
+      <div><dt class="label muted">v1</dt><dd>November 17</dd></div>
+      <div><dt class="label muted">v2</dt><dd>Project fair, December 1</dd></div>
+    </dl>
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap">
+    <h2 class="label"><span class="num">01</span>Why it matters</h2>
+    <div class="body">
+      <p class="heading">Residential proxy exits churn faster than detection feeds update.</p>
+      <p>
+        A third of residential proxy exit IPs last a single day
+        (<a href="https://ipinfo.io/blog/vpns-residential-proxies-abuse-findings-rsac-2026">IPinfo / AbuseIPDB, 2026</a>),
+        but the major detection feeds update daily or
+        <a href="https://spur.us/platform/residential-proxy-detection">within 24–48 hours</a>.
+        proxywatch is built to catch them within minutes, so you can challenge or block those logins.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <h2 class="label"><span class="num">02</span>Who it's for</h2>
+    <div class="body">
+      <p>
+        Banks, fintechs, and any company where a bad login is expensive. Inside them, the fraud team
+        that owns login policy.
+      </p>
+      <p class="heading">The login they can't decide on</p>
+      <p>
+        An account usually logs in from California. A new login arrives, also from California, but from a new
+        IP address, a slightly different location, maybe a different telecom provider. It could be the
+        customer, so there isn't enough information to block or challenge it. Residential proxies are chosen
+        to look exactly like this. But if you knew the IP was a residential proxy exit right now, you could
+        challenge or block the login. That's the whole point of the product.
+      </p>
+      <p class="heading">Why they'd switch</p>
+      <ul class="dash">
+        <li>Fresher data: exits flagged in minutes, not days.</li>
+        <li>Test it free on your own production traffic for a day or two, and see for yourself.</li>
+        <li>Very easy to sign up: get a key without leaving the terminal, no sales call.</li>
+        <li>Cheaper, with no vendor lock-in.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="label"><span class="num">03</span>How it works</h2>
+    <div class="body">
+      <div class="steps">
+        <div><p class="label">1 · Probe</p><p>Send tiny requests through residential proxy networks, around the clock, to our own server.</p></div>
+        <div><p class="label">2 · Record</p><p>Each arrival reveals an exit IP. Store when it was an exit, to the minute.</p></div>
+        <div><p class="label">3 · Look up</p><p>One API call: is this IP a proxy exit now, or was it at a given time?</p></div>
+        <div><p class="label">4 · Act</p><p>Fresh exit + new IP for this account → challenge or block.</p></div>
+      </div>
+<pre><span class="c"># sign up and look up an IP, without leaving the terminal</span>
+$ npx proxywatch login
+$ proxywatch check 203.0.113.42
+{
+  "ip": "203.0.113.42",
+  "residential_proxy": true,
+  "provider": "provider-a",
+  "first_seen": "2026-11-02T14:14Z",
+  "last_seen": "2026-11-02T14:31Z"
+}</pre>
+      <p>
+        US exits only, to start: they're the most valuable. Probes run only through vetted providers that
+        verify their customers and claim consent from device owners.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="focus">
+  <div class="wrap">
+    <h2 class="label"><span class="num">04</span>Focus: Systems</h2>
+    <div class="body">
+      <p>
+        Speed is a systems property. The product is the pipeline: probes running around the clock, storage
+        that can answer "was this IP an exit at 2:14 PM?", a fast lookup API, and usage metering behind
+        terminal signup.
+      </p>
+      <p>
+        We'll know it works by measuring time-to-flag: for every exit we see, how many minutes until
+        proxywatch flags it, and whether the incumbents have flagged it 5 minutes, 1 hour, and 24 hours later.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <h2 class="label"><span class="num">05</span>Roadmap</h2>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Week</th><th>Build</th><th>Research</th></tr></thead>
+          <tbody>
+            <tr><td>Nov 3–10</td><td>Test one provider: 1,000 probes, count the unique IPs</td><td>How competitors find exits, especially those that pay for proxy access</td></tr>
+            <tr><td>Nov 10–17 <span class="accent">v1</span></td><td>Echo server and probe worker · minute-level sighting history · lookup API · terminal signup · dashboard</td><td>Get the most fresh exits per dollar from each provider</td></tr>
+            <tr><td>Nov 17–24</td><td>Second provider · estimate pool sizes · time-to-flag vs. incumbents</td><td>Head-to-head: check our fresh exits against incumbents' lookups</td></tr>
+            <tr><td>Nov 24–Dec 1 <span class="accent">v2</span></td><td>Public scorecard · backtest a CSV of past logins · billing from the terminal · fair demo</td><td>Next methods: proxy SDKs in apps and TV firmware, IPv6, carrier NAT</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="scope">
+        <div>
+          <h3 class="label">v1 · Nov 17</h3>
+          <ul class="dash">
+            <li>Probes on 1–2 providers, nonstop</li>
+            <li>Minute-level exit history</li>
+            <li>Lookup API: now, or at a given time</li>
+            <li>Signup and API key from the terminal</li>
+            <li>Usage dashboard</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="label">v2 · Dec 1</h3>
+          <ul class="dash">
+            <li>More providers</li>
+            <li>Public time-to-flag scorecard</li>
+            <li>Backtest on past logins</li>
+            <li>Free trial caps, billing from the terminal</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="label">Out, for now</h3>
+          <ul class="dash">
+            <li>A script on the customer's login page</li>
+            <li>Device scanning</li>
+            <li>Pooling login data across customers</li>
+            <li>Machine-learning scores</li>
+            <li>SOC 2 and enterprise compliance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <h2 class="label"><span class="num">06</span>Stack</h2>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Part</th><th>Tool</th><th>Why it fits</th></tr></thead>
+          <tbody>
+            <tr><td>Probe worker + echo server</td><td>Always-on VPS (Hetzner)</td><td>Freshness needs probes running nonstop. A loop that never stops doesn't fit a cron schedule.</td></tr>
+            <tr><td>Exit history</td><td>Supabase Postgres</td><td>Sighting windows ("exit from 2:14 to 2:31") keep "was it an exit at time T?" a fast range lookup, and small.</td></tr>
+            <tr><td>Lookup API + dashboard</td><td>Next.js on Vercel</td><td>Fast to ship, deploys on every push.</td></tr>
+            <tr><td>Sign-in</td><td>Clerk</td><td>Dashboard sign-in, managed from its CLI.</td></tr>
+            <tr><td>Terminal signup</td><td>proxywatch CLI + MCP server</td><td>A developer or their agent gets a key and runs lookups without leaving the terminal.</td></tr>
+            <tr><td>Billing (v2)</td><td>Stripe</td><td>Its CLI and agent tools fit terminal-first billing.</td></tr>
+            <tr><td>Agent access</td><td>Supabase MCP · Clerk CLI · Vercel CLI · gh · hcloud</td><td>My agent can build, deploy, and check every part of the system.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">Budget: about $100 a month, mostly proxy bandwidth.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="label muted">Ken Piech · MPCS 51238 · November 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
