@@ -51,6 +51,7 @@
     section .wrap { padding-top: 4rem; padding-bottom: 4rem;
                     display: grid; grid-template-columns: 3fr 9fr; gap: 2rem; }
     @media (max-width: 760px) { section .wrap { grid-template-columns: 1fr; gap: 1.5rem; } }
+    section .wrap > * { min-width: 0; }
     .num { display: block; font-size: 24px; font-weight: 700; color: var(--muted); margin-bottom: 0.5rem; }
     .body > * + * { margin-top: 1.25rem; }
     .body p { max-width: 44rem; }
@@ -79,6 +80,14 @@
     tr:last-child td { border-bottom: 0; }
     td:first-child { white-space: nowrap; font-weight: 700; }
     .table-scroll { overflow-x: auto; }
+    @media (max-width: 760px) {
+      thead { display: none; }
+      table, tbody, tr, td { display: block; }
+      tr { border-bottom: 1px solid var(--text); padding: 0.75rem 0; }
+      tr:last-child { border-bottom: 0; }
+      td, tr:last-child td { border-bottom: 0; padding: 0.25rem 1rem; }
+      td:first-child { white-space: normal; }
+    }
 
     .scope { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
     .scope h3 { border-top: 1px solid var(--text); padding-top: 1rem; margin-bottom: 1rem; }
